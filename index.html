@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Grid Playground</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="grid-container">
+        <header>
+            <div>
+                <label>Items</label>
+                <button @click="addItem">+</button>
+                <button>-</button>
+            </div>
+
+            <div>
+                <label>Columns</label>
+                <input type="number" v-model="columnCount">
+            </div>
+
+            <div>
+                <label>Rows</label>
+                <input type="number" v-model="rowCount">
+            </div>
+        </header>
+
+        <div
+            id="grid-prototype"
+            :style="{
+                gridTemplateColumns: 'repeat(' + columnCount + ', 1fr)',
+                gridTemplateRows: 'repeat(' + rowCount + ', 1fr)',
+                gridGap: '20px',
+            }"
+        >
+            <template v-for="(item, index) in items">
+                <div
+                    @click="selectGridItem(index)"
+                    :style="{
+                        height: item.height + 'px',
+                        width: item.width + 'px',
+                        background: 'aquamarine',
+                        cursor: 'pointer',
+                    }"
+                >
+                    {{ index + 1 }}. {{ item.text }}
+                </div>
+            </template>
+        </div>
+
+        <footer v-if="selected">
+            <label>Text</label>
+            <input type="text" v-model="selected.text">
+
+            <label>Height</label>
+            <input type="number" v-model.number="selected.height">
+
+            <label>Width</label>
+            <input type="number" v-model.number="selected.width">
+        </footer>
+    </div>
+
+    <script src="playground.js"></script>
+</body>
+</html>
