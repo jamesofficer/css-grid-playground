@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>CSS Grid Playground</title>
+
+    <link rel="stylesheet" href="assets/normalize.css">
+    <link rel="stylesheet" href="assets/style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="grid-container">
@@ -19,12 +23,17 @@
 
             <div>
                 <label>Columns</label>
-                <input type="number" v-model="columnCount">
+                <input type="number" v-model.number="columnCount" min="1">
             </div>
 
             <div>
                 <label>Rows</label>
-                <input type="number" v-model="rowCount">
+                <input type="number" v-model.number="rowCount" min="1">
+            </div>
+
+            <div>
+                <label>Grip Gap</label>
+                <input type="number" v-model.number="gridGap" min="0">
             </div>
         </header>
 
@@ -33,36 +42,67 @@
             :style="{
                 gridTemplateColumns: 'repeat(' + columnCount + ', 1fr)',
                 gridTemplateRows: 'repeat(' + rowCount + ', 1fr)',
-                gridGap: '20px',
+                gridGap: gridGap + 'px',
+                alignContent: 'stretch',
+                justifyContent: 'stretch',
             }"
         >
             <template v-for="(item, index) in items">
                 <div
                     @click="selectGridItem(index)"
+                    class="grid-item"
                     :style="{
-                        height: item.height + 'px',
-                        width: item.width + 'px',
-                        background: 'aquamarine',
-                        cursor: 'pointer',
+                        alignSelf: item.alignSelf,
+                        justifySelf: item.justifySelf,
                     }"
                 >
-                    {{ index + 1 }}. {{ item.text }}
+                    {{ item.text }}
                 </div>
             </template>
         </div>
 
-        <footer v-if="selected">
-            <label>Text</label>
-            <input type="text" v-model="selected.text">
+        <footer v-if="selected && selected.type === 'Grid Item'">
+            <div style="grid-column: 1 / 7;">
+                <h3>Grid Item</h3>
+            </div>
 
-            <label>Height</label>
-            <input type="number" v-model.number="selected.height">
+            <div>
+                <label>Text</label>
+                <input type="text" v-model="selected.text">
+            </div>
 
-            <label>Width</label>
-            <input type="number" v-model.number="selected.width">
+            <div>
+                <label>Height</label>
+                <input type="number" v-model.number="selected.height">
+            </div>
+
+            <div>
+                <label>Width</label>
+                <input type="number" v-model.number="selected.width">
+            </div>
+
+            <div>
+                <label>Align Self</label>
+                <select v-model="selected.alignSelf">
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Justify Self</label>
+                <select v-model="selected.justifySelf">
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                </select>
+            </div>
         </footer>
     </div>
 
-    <script src="playground.js"></script>
+    <script src="src/playground.js"></script>
 </body>
 </html>
