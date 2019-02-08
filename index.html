@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,56 +13,88 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
+
 <body>
-    <div id="grid-container">
-        <header>
+    <div id="css-grid-playground">
+        <!-- Grid Settings -->
+        <section id="grid-settings">
             <div>
                 <label>Items</label>
                 <button @click="addItem">+</button>
-                <button>-</button>
+                <button @click="removeItem">-</button>
             </div>
 
             <div>
                 <label>Columns</label>
-                <input type="number" v-model.number="columnCount" min="1">
+                <input type="number" v-model.number="grid.columns" min="1">
             </div>
 
             <div>
                 <label>Rows</label>
-                <input type="number" v-model.number="rowCount" min="1">
+                <input type="number" v-model.number="grid.rows" min="1">
             </div>
 
             <div>
                 <label>Grip Gap</label>
-                <input type="number" v-model.number="gridGap" min="0">
+                <input type="number" v-model.number="grid.gap" min="0">
             </div>
-        </header>
 
-        <div
-            id="grid-prototype"
-            :style="{
-                gridTemplateColumns: 'repeat(' + columnCount + ', 1fr)',
-                gridTemplateRows: 'repeat(' + rowCount + ', 1fr)',
-                gridGap: gridGap + 'px',
-                alignContent: 'stretch',
-                justifyContent: 'stretch',
-            }"
+            <div>
+                <label>justify-items</label>
+                <select v-model="grid.justifyItems">
+                    <option value="auto">auto</option>
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                </select>
+            </div>
+
+            <div>
+                <label>align-items</label>
+                <select v-model="grid.alignItems">
+                    <option value="auto">auto</option>
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                </select>
+            </div>
+
+            <div>
+                <label>justify-content</label>
+                <select v-model="grid.justifyContent">
+                    <option value="auto">auto</option>
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                    <option value="space-around">space-around</option>
+                    <option value="space-between">space-between</option>
+                    <option value="space-evenly">space-evenly</option>
+                </select>
+            </div>
+
+            <div>
+                <label>align-content</label>
+                <select v-model="grid.alignContent">
+                    <option value="auto">auto</option>
+                    <option value="start">start</option>
+                    <option value="end">end</option>
+                    <option value="center">center</option>
+                    <option value="stretch">stretch</option>
+                    <option value="space-around">space-around</option>
+                    <option value="space-between">space-between</option>
+                    <option value="space-evenly">space-evenly</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Grid Item Settings -->
+        <section
+            id="grid-item-settings"
+            v-if="selected && selected.type === 'Grid Item'"
         >
-            <template v-for="(item, index) in items">
-                <div
-                    @click="selectGridItem(index)"
-                    class="grid-item"
-                    :style="{
-                        alignSelf: item.alignSelf,
-                        justifySelf: item.justifySelf,
-                    }"
-                >
-                    {{ item.text }}
-                </div>
-            </template>
-        </div>
-
-        <footer v-if="selected && selected.type === 'Grid Item'">
             <div style="grid-column: 1 / 7;">
                 <h3>Grid Item</h3>
             </div>
@@ -72,18 +105,19 @@
             </div>
 
             <div>
-                <label>Height</label>
+                <label>Height (px)</label>
                 <input type="number" v-model.number="selected.height">
             </div>
 
             <div>
-                <label>Width</label>
+                <label>Width (px)</label>
                 <input type="number" v-model.number="selected.width">
             </div>
 
             <div>
-                <label>Align Self</label>
-                <select v-model="selected.alignSelf">
+                <label>justify-self</label>
+                <select v-model="selected.justifySelf">
+                    <option value="auto">auto</option>
                     <option value="start">start</option>
                     <option value="end">end</option>
                     <option value="center">center</option>
@@ -92,15 +126,44 @@
             </div>
 
             <div>
-                <label>Justify Self</label>
-                <select v-model="selected.justifySelf">
+                <label>align-self</label>
+                <select v-model="selected.alignSelf">
+                    <option value="auto">auto</option>
                     <option value="start">start</option>
                     <option value="end">end</option>
                     <option value="center">center</option>
                     <option value="stretch">stretch</option>
                 </select>
             </div>
-        </footer>
+        </section>
+
+        <!-- Grid Display -->
+        <section
+            id="grid-display"
+            :style="{
+                gridTemplateColumns: 'repeat(' + grid.columns + ', 1fr)',
+                gridTemplateRows: 'repeat(' + grid.rows + ', 1fr)',
+                gridGap: grid.gap + 'px',
+                justifyContent: grid.justifyContent,
+                alignContent: grid.alignContent,
+                justifyItems: grid.justifyItems,
+                alignItems: grid.alignItems,
+            }"
+        >
+            <div
+                v-for="(item, index) in items"
+                @click="selectGridItem(index)"
+                class="grid-item"
+                :style="{
+                    alignSelf: item.alignSelf,
+                    justifySelf: item.justifySelf,
+                    height: item.height !== 'auto' ? item.height + 'px' : 'auto',
+                    width: item.width !== 'auto' ? item.width + 'px' : 'auto',
+                }"
+            >
+                {{ item.text }}
+            </div>
+        </section>
     </div>
 
     <script src="src/playground.js"></script>

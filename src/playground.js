@@ -1,13 +1,22 @@
 Vue.config.devtools = true;
 
 new Vue({
-    el: '#grid-container',
+    el: '#css-grid-playground',
+
     data: {
+        grid: {
+            columns: 3,
+            rows: 3,
+            gap: 10,
+            justifyContent: 'auto',
+            alignContent: 'auto',
+            justifyItems: 'auto',
+            alignItems: 'auto',
+        },
+
         items: [],
-        selected: undefined,
-        columnCount: 1,
-        rowCount: 1,
-        gridGap: 10,
+
+        selected: {},
     },
 
     methods: {
@@ -15,11 +24,15 @@ new Vue({
             this.items.push({
                 type: 'Grid Item',
                 text: this.items.length + 1,
-                width: undefined,
-                height: undefined,
-                alignSelf: 'stretch',
-                justifySelf: 'stretch',
+                width: 'auto',
+                height: 'auto',
+                alignSelf: 'auto',
+                justifySelf: 'auto',
             });
+        },
+
+        removeItem() {
+            this.items.splice(this.items.length - 1, 1);
         },
 
         selectGridItem(index) {
@@ -30,5 +43,5 @@ new Vue({
             console.log(value);
             console.log(property);
         }
-    }
+    },
 })
