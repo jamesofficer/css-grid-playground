@@ -18,6 +18,8 @@
     <div id="css-grid-playground">
         <!-- Grid Settings -->
         <section id="grid-settings">
+            <h3>Grid Settings</h3>
+
             <div>
                 <label>Items</label>
                 <button @click="addItem">+</button>
@@ -35,7 +37,7 @@
             </div>
 
             <div>
-                <label>Grip Gap</label>
+                <label>Grip Gap (px)</label>
                 <input type="number" v-model.number="grid.gap" min="0">
             </div>
 
@@ -95,9 +97,7 @@
             id="grid-item-settings"
             v-if="selected && selected.type === 'Grid Item'"
         >
-            <div style="grid-column: 1 / 7;">
-                <h3>Grid Item</h3>
-            </div>
+            <h3>Grid Item</h3>
 
             <div>
                 <label>Text</label>
