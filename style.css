@@ -4,7 +4,6 @@ html {
 
 body {
     background: rgb(102, 127, 150);
-    padding: 10px 0;
 }
 
 h3 {
@@ -28,15 +27,16 @@ h3 {
 
 #css-grid-playground {
     display: grid;
-    grid-gap: 15px;
+    grid-gap: 12px;
     grid-template-columns: 450px 40px 1fr;
-    grid-template-rows: 90px 40px 1fr 1fr;
+    grid-template-rows: 90px 40px 1fr 1fr 15px;
     grid-template-areas:
         "grid-settings            grid-settings     grid-settings"
         "grid-item-settings       empty             column-list"
         "grid-item-settings       row-list          grid-display"
-        "grid-column-settings     row-list          grid-display";
-    height: 90vh;
+        "grid-column-settings     row-list          grid-display"
+        "contact-info             contact-info      contact-info";
+    height: 93vh;
     padding: 25px;
     overflow: auto;
 }
@@ -117,6 +117,23 @@ h3 {
     font-size: 2em;
     cursor: pointer;
 }
+
+#contact-info {
+    grid-area: contact-info;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+#contact-info > p {
+    font-size: 0.8em;
+}
+
+#contact-info > p > a {
+    color: white;
+    font-weight: 600;
+}
+
 
 label {
     font-size: 0.8em;
