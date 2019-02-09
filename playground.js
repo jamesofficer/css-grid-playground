@@ -68,7 +68,11 @@ new Vue({
             });
         },
 
-        removeColumn() {},
+        removeColumn() {
+            if (this.grid.columns.length > 1) {
+                this.grid.columns.splice(this.grid.columns.length - 1, 1);                
+            }
+        },
 
         selectColumn(index) {
             if (index === this.selectedColumn) {
@@ -87,7 +91,11 @@ new Vue({
             });
         },
 
-        removeRow() {},
+        removeRow() {
+            if (this.grid.rows.length > 1) {
+                this.grid.rows.splice(this.grid.rows.length - 1, 1);
+            }
+        },
 
         selectRow(index) {
             if (index === this.selectedRow) {
@@ -125,6 +133,7 @@ new Vue({
         }
     },
 
+    // Setup a basic grid when the app loads.
     mounted() {
         this.grid.columns.push(
             { index: 0, width: 1, unit: 'fr' },
