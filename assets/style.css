@@ -67,12 +67,14 @@ h3 {
 .grid-item {
     background: rgb(206, 213, 226);
     border: 1px dashed cornflowerblue;
+    padding: 5px;
     color: rgb(144, 152, 168);
     font-size: 2em;
     cursor: pointer;
 }
 
 label {
+    font-size: 0.8em;
     color: #444;
     display: block;
     margin-bottom: 5px;

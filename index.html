@@ -40,9 +40,9 @@
                 <label>Grip Gap (px)</label>
                 <input type="number" v-model.number="grid.gap" min="0">
             </div>
-
+            
             <div>
-                <label>justify-items</label>
+                <label>Justify Items</label>
                 <select v-model="grid.justifyItems">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
@@ -53,7 +53,7 @@
             </div>
 
             <div>
-                <label>align-items</label>
+                <label>Align Items</label>
                 <select v-model="grid.alignItems">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
@@ -64,7 +64,7 @@
             </div>
 
             <div>
-                <label>justify-content</label>
+                <label>Justify Content</label>
                 <select v-model="grid.justifyContent">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
@@ -78,7 +78,7 @@
             </div>
 
             <div>
-                <label>align-content</label>
+                <label>Align Content</label>
                 <select v-model="grid.alignContent">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
@@ -115,7 +115,7 @@
             </div>
 
             <div>
-                <label>justify-self</label>
+                <label>Justify Self</label>
                 <select v-model="selected.justifySelf">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
@@ -126,13 +126,45 @@
             </div>
 
             <div>
-                <label>align-self</label>
+                <label>Align Self</label>
                 <select v-model="selected.alignSelf">
                     <option value="auto">auto</option>
                     <option value="start">start</option>
                     <option value="end">end</option>
                     <option value="center">center</option>
                     <option value="stretch">stretch</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Column Start</label>
+                <select v-model="selected.gridColumnStart">
+                    <option value="auto">auto</option>
+                    <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Column End</label>
+                <select v-model="selected.gridColumnEnd">
+                    <option value="auto">auto</option>
+                    <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Row Start</label>
+                <select v-model="selected.gridRowStart">
+                    <option value="auto">auto</option>
+                    <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Row End</label>
+                <select v-model="selected.gridRowEnd">
+                    <option value="auto">auto</option>
+                    <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
                 </select>
             </div>
         </section>
@@ -155,10 +187,15 @@
                 @click="selectGridItem(index)"
                 class="grid-item"
                 :style="{
+                    background: item.selected ? 'rgb(235, 231, 186)' : 'rgb(206, 213, 226)',
                     alignSelf: item.alignSelf,
                     justifySelf: item.justifySelf,
                     height: item.height !== 'auto' ? item.height + 'px' : 'auto',
                     width: item.width !== 'auto' ? item.width + 'px' : 'auto',
+                    gridColumnStart: item.gridColumnStart,
+                    gridColumnEnd: item.gridColumnEnd,
+                    gridRowStart: item.gridRowStart,
+                    gridRowEnd: item.gridRowEnd,
                 }"
             >
                 {{ item.text }}
