@@ -23,7 +23,7 @@ h3 {
 #css-grid-playground {
     display: grid;
     grid-gap: 25px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 450px 1fr;
     grid-template-rows: 90px 1fr 1fr;
     grid-template-areas:
         "grid-settings          grid-settings"
@@ -38,14 +38,10 @@ h3 {
     display: grid;
     grid-area: grid-settings;
     grid-gap: 20px;
-    grid-template-columns: auto repeat(10, 1fr);
+    grid-template-columns: auto repeat(8, 1fr);
     align-items: center;
     justify-items: center;
-}
-
-#grid-settings > h3 {
-    grid-column-start: 1;
-    grid-column-end: 5;
+    justify-content: space-between;
 }
 
 #grid-column-settings {
@@ -56,12 +52,22 @@ h3 {
     display: grid;
     grid-area: grid-item-settings;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 25px 50px 50px;
+    grid-template-rows: 25px repeat(3, 1fr);
     grid-gap: 20px;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#grid-item-settings > h3 {
-    grid-column: 1 / 5;
+#grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#grid-item-text {
+    grid-column-start: 1;
+    grid-column-end: 5;
 }
 
 #grid-display {
@@ -90,5 +96,5 @@ input {
     background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgb(79, 113, 145);
     padding: 5px;
-    max-width: 100px;
+    width: 95%;
 }

@@ -22,7 +22,7 @@ new Vue({
     methods: {
         addItem() {
             this.items.push({
-                type: 'Grid Item',
+                index: this.items.length,
                 selected: false,
                 text: this.items.length + 1,
                 width: 'auto',
@@ -41,12 +41,25 @@ new Vue({
         },
 
         selectGridItem(index) {
-            if (this.selected) {
+            if (this.selected.index === index) {
                 this.selected.selected = false;
+                this.selected = {};
+            } else {
+                this.selected.selected = false;
+                this.selected = this.items[index];
+                this.selected.selected = true;
             }
-
-            this.selected = this.items[index];
-            this.selected.selected = true;
         },
+
+        resetGridItem() {
+            this.selected.width = 'auto';
+            this.selected.height = 'auto';
+            this.selected.alignSelf = 'auto';
+            this.selected.justifySelf = 'auto';
+            this.selected.gridColumnStart = 'auto';
+            this.selected.gridColumnEnd = 'auto';
+            this.selected.gridRowStart = 'auto';
+            this.selected.gridRowEnd = 'auto';
+        }
     },
 })

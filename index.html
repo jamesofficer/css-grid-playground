@@ -99,18 +99,22 @@
         <section id="grid-column-settings" class="box-styles">
             <h3>Column Settings</h3>
 
-            <p>hello there!</p>
+            <p>WIP</p>
         </section>
 
         <!-- Grid Item Settings -->
         <section
             id="grid-item-settings"
             class="box-styles"
-            v-if="selected && selected.type === 'Grid Item'"
+            v-if="selected.selected !== undefined"
         >
-            <h3>Grid Item</h3>
+            <div id="grid-item-title">
+                <h3>Grid Item</h3>
 
-            <div>
+                <button @click="resetGridItem">Reset</button>
+            </div>
+
+            <div id="grid-item-text">
                 <label>Text</label>
                 <input type="text" v-model="selected.text">
             </div>
