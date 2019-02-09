@@ -8,6 +8,7 @@
 
     <title>CSS Grid Playground</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"> 
     <link rel="stylesheet" href="assets/normalize.css">
     <link rel="stylesheet" href="assets/style.css">
 
@@ -17,8 +18,10 @@
 <body>
     <div id="css-grid-playground">
         <!-- Grid Settings -->
-        <section id="grid-settings">
-            <h3>Grid Settings</h3>
+        <section id="grid-settings" class="box-styles">
+            <div>
+                <h3>Grid Settings</h3>
+            </div>
 
             <div>
                 <label>Items</label>
@@ -92,9 +95,17 @@
             </div>
         </section>
 
+        <!-- Column Settings -->
+        <section id="grid-column-settings" class="box-styles">
+            <h3>Column Settings</h3>
+
+            <p>hello there!</p>
+        </section>
+
         <!-- Grid Item Settings -->
         <section
             id="grid-item-settings"
+            class="box-styles"
             v-if="selected && selected.type === 'Grid Item'"
         >
             <h3>Grid Item</h3>
@@ -172,6 +183,7 @@
         <!-- Grid Display -->
         <section
             id="grid-display"
+            class="box-styles"
             :style="{
                 gridTemplateColumns: 'repeat(' + grid.columns + ', 1fr)',
                 gridTemplateRows: 'repeat(' + grid.rows + ', 1fr)',
