@@ -9,8 +9,8 @@
     <title>CSS Grid Playground</title>
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"> 
-    <link rel="stylesheet" href="assets/normalize.css">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
@@ -102,106 +102,143 @@
             id="grid-item-settings"
             class="box-styles"
         >
-            <div id="grid-item-title">
-                <h3>Grid Item</h3>
-
-                <button @click="resetGridItem">Reset</button>
+            <div
+                v-if="! selectedGridItem.selected"
+                :style="{
+                    gridColumnStart: 1,
+                    gridColumnEnd: 5,
+                    gridRowStart: 1,
+                    gridRowEnd: 5,
+                    justifySelf: 'center',
+                    color: 'rgb(130, 165, 197)',
+                    fontSize: '1.5em',
+                    fontWeight: '600',
+                }"
+            >
+                <p>Select a grid item.</p>
             </div>
 
-            <div id="grid-item-text">
-                <label>Text</label>
-                <input type="text" v-model="selectedGridItem.text">
-            </div>
+            <template v-else>
+                <div id="grid-item-title">
+                    <h3>Grid Item</h3>
 
-            <div>
-                <label>Height (px)</label>
-                <input type="number" v-model.number="selectedGridItem.height">
-            </div>
+                    <button @click="resetGridItem">Reset</button>
+                </div>
 
-            <div>
-                <label>Width (px)</label>
-                <input type="number" v-model.number="selectedGridItem.width">
-            </div>
+                <div id="grid-item-text">
+                    <label>Text</label>
+                    <input type="text" v-model="selectedGridItem.text">
+                </div>
 
-            <div>
-                <label>Justify Self</label>
-                <select v-model="selectedGridItem.justifySelf">
-                    <option value="auto">auto</option>
-                    <option value="start">start</option>
-                    <option value="end">end</option>
-                    <option value="center">center</option>
-                    <option value="stretch">stretch</option>
-                </select>
-            </div>
+                <div>
+                    <label>Height (px)</label>
+                    <input type="number" v-model.number="selectedGridItem.height">
+                </div>
 
-            <div>
-                <label>Align Self</label>
-                <select v-model="selectedGridItem.alignSelf">
-                    <option value="auto">auto</option>
-                    <option value="start">start</option>
-                    <option value="end">end</option>
-                    <option value="center">center</option>
-                    <option value="stretch">stretch</option>
-                </select>
-            </div>
+                <div>
+                    <label>Width (px)</label>
+                    <input type="number" v-model.number="selectedGridItem.width">
+                </div>
 
-            <div>
-                <label>Column Start</label>
-                <select v-model="selectedGridItem.gridColumnStart">
-                    <option value="auto">auto</option>
-                    <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
-                </select>
-            </div>
+                <div>
+                    <label>Justify Self</label>
+                    <select v-model="selectedGridItem.justifySelf">
+                        <option value="auto">auto</option>
+                        <option value="start">start</option>
+                        <option value="end">end</option>
+                        <option value="center">center</option>
+                        <option value="stretch">stretch</option>
+                    </select>
+                </div>
 
-            <div>
-                <label>Column End</label>
-                <select v-model="selectedGridItem.gridColumnEnd">
-                    <option value="auto">auto</option>
-                    <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
-                </select>
-            </div>
+                <div>
+                    <label>Align Self</label>
+                    <select v-model="selectedGridItem.alignSelf">
+                        <option value="auto">auto</option>
+                        <option value="start">start</option>
+                        <option value="end">end</option>
+                        <option value="center">center</option>
+                        <option value="stretch">stretch</option>
+                    </select>
+                </div>
 
-            <div>
-                <label>Row Start</label>
-                <select v-model="selectedGridItem.gridRowStart">
-                    <option value="auto">auto</option>
-                    <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
-                </select>
-            </div>
+                <div>
+                    <label>Column Start</label>
+                    <select v-model="selectedGridItem.gridColumnStart">
+                        <option value="auto">auto</option>
+                        <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                    </select>
+                </div>
 
-            <div>
-                <label>Row End</label>
-                <select v-model="selectedGridItem.gridRowEnd">
-                    <option value="auto">auto</option>
-                    <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
-                </select>
-            </div>
+                <div>
+                    <label>Column End</label>
+                    <select v-model="selectedGridItem.gridColumnEnd">
+                        <option value="auto">auto</option>
+                        <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Row Start</label>
+                    <select v-model="selectedGridItem.gridRowStart">
+                        <option value="auto">auto</option>
+                        <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Row End</label>
+                    <select v-model="selectedGridItem.gridRowEnd">
+                        <option value="auto">auto</option>
+                        <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
+                    </select>
+                </div>
+            </template>
         </section>
 
         <!-- Column and Row Settings -->
         <section id="grid-column-settings" class="box-styles">
-            <h3>
-                {{ selectedRow !== undefined ? 'Row Settings' : 'Column Settings' }}
-            </h3>
+            <div
+                v-if="selectedRow === undefined && selectedColumn === undefined"
+                :style="{
+                    gridColumnStart: 1,
+                    gridColumnEnd: 5,
+                    gridRowStart: 1,
+                    gridRowEnd: 5,
+                    alignSelf: 'center',
+                    justifySelf: 'center',
+                    color: 'rgb(130, 165, 197)',
+                    fontSize: '1.5em',
+                    fontWeight: '600',
+                }"
+            >
+                <p>Select a row or column.</p>
+            </div>
 
-            <template v-if="selectedRow !== undefined">
-                <label>Width</label>
-                <input type="number" v-model="grid.rows[selectedRow].width">
-                <select v-model="grid.rows[selectedRow].unit">
-                    <option value="fr">fr</option>
-                    <option value="px">px</option>
-                    <option value="%">%</option>
-                </select>
-            </template>
+            <template v-else>
+                <h3>
+                    {{ selectedRow !== undefined ? 'Row ' + (selectedRow + 1) + ' Settings' : 'Column ' + (selectedColumn + 1) + ' Settings' }}
+                </h3>
 
-            <template v-if="selectedColumn !== undefined">
-                <label>Width</label>
-                <input type="number" v-model="grid.columns[selectedColumn].width">
-                <select v-model="grid.columns[selectedColumn].unit">
-                    <option value="fr">fr</option>
-                    <option value="px">px</option>
-                    <option value="%">%</option>
-                </select>
+                <template v-if="selectedRow !== undefined">
+                    <label>Width</label>
+                    <input type="number" v-model="grid.rows[selectedRow].width">
+                    <select v-model="grid.rows[selectedRow].unit">
+                        <option value="fr">fr</option>
+                        <option value="px">px</option>
+                        <option value="%">%</option>
+                    </select>
+                </template>
+
+                <template v-if="selectedColumn !== undefined">
+                    <label>Width</label>
+                    <input type="number" v-model="grid.columns[selectedColumn].width">
+                    <select v-model="grid.columns[selectedColumn].unit">
+                        <option value="fr">fr</option>
+                        <option value="px">px</option>
+                        <option value="%">%</option>
+                    </select>
+                </template>
             </template>
         </section>
 
@@ -210,11 +247,22 @@
             id="column-list"
             class="list-styles"
             :style="{
-                gridTemplateColumns: 'repeat(' + grid.columns + ', 1fr)',
+                gridTemplateColumns: columnsString,
             }"
         >
-            <div v-for="(column, index) in grid.columns">
-                <span class="list-item-button" @click="selectColumn(index)">
+            <div
+                v-for="(column, index) in grid.columns"
+                :style="{
+                    width: '100%',
+                    textAlign: 'center',
+                    border: selectedColumn === index ? '1px dashed rgb(221, 199, 101)' : 'none',
+                    background: selectedColumn === index ? 'rgb(235, 231, 186)' : 'none',
+                }"
+            >
+                <span
+                    class="list-item-button"
+                    @click="selectColumn(index)"
+                >
                     {{ column.index + 1 }}
                 </span>
             </div>
@@ -224,9 +272,26 @@
         <section
             id="row-list"
             class="list-styles"
+            :style="{
+                gridTemplateRows: rowsString,
+            }"
         >
-            <div v-for="(row, index) in grid.rows">
-                <span class="list-item-button" @click="selectRow(index)">
+            <div
+                v-for="(row, index) in grid.rows"
+                :style="{
+                    display: 'grid',
+                    alignItems: 'center',
+                    justifyItems: 'center',
+                    height: '100%',
+                    width: '100%',
+                    border: selectedRow === index ? '1px dashed rgb(221, 199, 101)' : 'none',
+                    background: selectedRow === index ? 'rgb(235, 231, 186)' : 'none',
+                }"
+            >
+                <span
+                    class="list-item-button"
+                    @click="selectRow(index)"
+                >
                     {{ row.index + 1 }}
                 </span>
             </div>
@@ -267,6 +332,6 @@
         </section>
     </div>
 
-    <script src="src/playground.js"></script>
+    <script src="playground.js"></script>
 </body>
 </html>

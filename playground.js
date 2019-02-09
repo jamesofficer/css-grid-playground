@@ -71,8 +71,12 @@ new Vue({
         removeColumn() {},
 
         selectColumn(index) {
-            this.selectedRow = undefined;
-            this.selectedColumn = index;
+            if (index === this.selectedColumn) {
+                this.selectedColumn = undefined;
+            } else {
+                this.selectedRow = undefined;
+                this.selectedColumn = index;
+            }
         },
 
         addRow() {
@@ -86,8 +90,12 @@ new Vue({
         removeRow() {},
 
         selectRow(index) {
-            this.selectedColumn = undefined;
-            this.selectedRow = index;
+            if (index === this.selectedRow) {
+                this.selectedRow = undefined;
+            } else {
+                this.selectedColumn = undefined;
+                this.selectedRow = index;
+            }
         },
 
         removeItem() {

@@ -54,8 +54,8 @@ h3 {
 #grid-column-settings {
     display: grid;
     grid-area: grid-column-settings;
-    grid-template-rows: 40px 25px 35px;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 40px 25px 35px 1fr;
 }
 
 #grid-column-settings > h3, label {
@@ -138,8 +138,9 @@ input {
     text-align: center;
     text-decoration: underline;
     cursor: pointer;
-    color: rgb(79, 113, 145);
+    font-size: 1.2em;
     font-weight: 600;
+    color: rgb(79, 113, 145);
 }
 
 .list-item-button:hover {
