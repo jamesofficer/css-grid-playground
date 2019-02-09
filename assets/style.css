@@ -20,15 +20,22 @@ h3 {
     padding: 15px;
 }
 
+.list-styles {
+    background: #ddd;
+    border: 2px dashed rgb(141, 169, 219);
+    padding: 5px;
+}
+
 #css-grid-playground {
     display: grid;
-    grid-gap: 25px;
-    grid-template-columns: 450px 1fr;
-    grid-template-rows: 90px 1fr 1fr;
+    grid-gap: 15px;
+    grid-template-columns: 450px 40px 1fr;
+    grid-template-rows: 90px 40px 1fr 1fr;
     grid-template-areas:
-        "grid-settings          grid-settings"
-        "grid-column-settings   grid-display"
-        "grid-item-settings     grid-display";
+        "grid-settings            grid-settings     grid-settings"
+        "grid-item-settings       empty             column-list"
+        "grid-item-settings       row-list          grid-display"
+        "grid-column-settings     row-list          grid-display";
     height: 90vh;
     padding: 25px;
     overflow: auto;
@@ -45,7 +52,20 @@ h3 {
 }
 
 #grid-column-settings {
+    display: grid;
     grid-area: grid-column-settings;
+    grid-template-rows: 40px 25px 35px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#grid-column-settings > h3, label {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#grid-column-settings > input {
+    grid-column-start: 1;
+    grid-column-end: 4;
 }
 
 #grid-item-settings {
@@ -75,6 +95,20 @@ h3 {
     grid-area: grid-display;
 }
 
+#column-list {
+    display: grid;
+    grid-area: column-list;
+    align-items: center;
+    justify-items: center;
+}
+
+#row-list {
+    display: grid;
+    grid-area: row-list;
+    align-items: center;
+    justify-items: center;
+}
+
 .grid-item {
     background: rgb(206, 213, 226);
     border: 1px dashed cornflowerblue;
@@ -97,4 +131,17 @@ input {
     border: 1px solid rgb(79, 113, 145);
     padding: 5px;
     width: 95%;
+}
+
+.list-item-button {
+    margin: 0;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgb(79, 113, 145);
+    font-weight: 600;
+}
+
+.list-item-button:hover {
+    color: rgb(130, 165, 197);
 }
