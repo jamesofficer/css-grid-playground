@@ -174,7 +174,9 @@
                     <label>Column Start</label>
                     <select v-model="selectedGridItem.gridColumnStart">
                         <option value="auto">auto</option>
-                        <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                        <option v-for="(column, index) in (grid.columns.length + 1)" :value="index + 1">
+                            {{ index + 1 }}
+                        </option>
                     </select>
                 </div>
 
@@ -182,7 +184,9 @@
                     <label>Column End</label>
                     <select v-model="selectedGridItem.gridColumnEnd">
                         <option value="auto">auto</option>
-                        <option v-for="column in (grid.columns + 1)" :value="column">{{ column }}</option>
+                        <option v-for="(column, index) in (grid.columns.length + 1)" :value="index + 1">
+                            {{ index + 1 }}
+                        </option>
                     </select>
                 </div>
 
@@ -190,7 +194,9 @@
                     <label>Row Start</label>
                     <select v-model="selectedGridItem.gridRowStart">
                         <option value="auto">auto</option>
-                        <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
+                        <option v-for="(row, index) in (grid.rows.length + 1)" :value="index + 1">
+                            {{ index + 1 }}
+                        </option>
                     </select>
                 </div>
 
@@ -198,7 +204,9 @@
                     <label>Row End</label>
                     <select v-model="selectedGridItem.gridRowEnd">
                         <option value="auto">auto</option>
-                        <option v-for="row in (grid.rows + 1)" :value="row">{{ row }}</option>
+                        <option v-for="(row, index) in (grid.rows.length + 1)" :value="index + 1">
+                            {{ index + 1 }}
+                        </option>
                     </select>
                 </div>
             </template>
